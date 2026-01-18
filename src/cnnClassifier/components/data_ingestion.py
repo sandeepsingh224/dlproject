@@ -3,8 +3,8 @@ import urllib.request as request
 import zipfile
 from src.cnnClassifier.logger import logging
 from src.cnnClassifier.entity.config_entity import DataIngestionConfig
-
-
+from src.cnnClassifier.utils.common import create_directories
+from pathlib import Path
 
 class DataIngestion:
     def __init__(self, config: DataIngestionConfig):
@@ -13,7 +13,13 @@ class DataIngestion:
 
     
     def download_file(self):
-        
+
+       
+        Path(self.config.local_data_file).parent.mkdir(
+            parents=True,
+            exist_ok=True
+        )
+
         if not os.path.exists(self.config.local_data_file):
             filename, headers = request.urlretrieve(
                 url = self.config.source_URL,

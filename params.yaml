@@ -1,5 +1,8 @@
-IMAGE_SIZE: [224, 224, 3]
-BATCH_SIZE: 32
-EPOCHS: 10
-LEARNING_RATE: 0.001
-AUGMENTATION: true
+image_size: 224       
+channel: 3           
+classes: 10        
+pretrained: true        
+batch_size: 32
+epochs: 10
+learning_rate: 0.001              
+

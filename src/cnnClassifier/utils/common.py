@@ -4,7 +4,7 @@ import yaml
 from src.cnnClassifier.logger import logging
 from box import ConfigBox
 from pathlib import Path
-
+import torch
 
 
 
@@ -27,3 +27,14 @@ def create_directories(path_to_directories: list, verbose=True):
         os.makedirs(path, exist_ok=True)
         if verbose:
             logging.info(f"created directory at: {path}")
+
+
+
+
+
+def save_model(path: Path, model):
+    
+    path = Path(path)
+    path.parent.mkdir(parents=True, exist_ok=True)
+
+    torch.save(model.state_dict(), path)
