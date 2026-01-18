@@ -1,0 +1,8 @@
+pandas 
+notebook
+python-box==6.0.2
+pyYAML
+joblib
+types-PyYAML
+
+#-e .
