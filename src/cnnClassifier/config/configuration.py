@@ -1,6 +1,9 @@
 from src.cnnClassifier.constants import *
-from src.cnnClassifier.utils.common import read_yaml,create_directories
-from src.cnnClassifier.entity.config_entity import (DataIngestionConfig,PrepareBaseModelConfig)
+from src.cnnClassifier.utils.common import read_yaml,create_directories,save_json
+from src.cnnClassifier.entity.config_entity import (DataIngestionConfig,
+                                                    PrepareBaseModelConfig,
+                                                    TrainingConfig,EvaluationConfig)
+import os
 
 class ConfigurationManager:
     def __init__(
@@ -13,7 +16,7 @@ class ConfigurationManager:
 
         create_directories([self.config.artifacts_root])
 
-
+   ## reading model
     
     def get_data_ingestion_config(self) -> DataIngestionConfig:
         config = self.config.data_ingestion
@@ -29,7 +32,7 @@ class ConfigurationManager:
 
         return data_ingestion_config
     
-          ## model trainer
+          ## preparing model
 
 
     def get_prepare_base_model_config(self) -> PrepareBaseModelConfig:
@@ -45,9 +48,48 @@ class ConfigurationManager:
             classes=self.params.CLASSES,
             batch_size=self.params.BATCH_SIZE,
             epochs=self.params.EPOCHS,
-            channel=self.params.CHANNEL,
+            channel=self.params.CHANNELS,
             pretrained=self.params.PRETRAINED
         )
 
         return prepare_base_model_config
     
+
+    ##  model training
+    
+    def get_training_config(self) -> TrainingConfig:
+        training = self.config.training
+        params = self.params
+
+        training_data = os.path.join(self.config.data_ingestion.unzip_dir, "mnist-m/training")
+
+        create_directories([
+            Path(training.root_dir)
+        ])
+
+        training_config = TrainingConfig(
+            root_dir=Path(training.root_dir),
+            trained_model_path=Path(training.trained_model_path),
+            training_data=Path(training_data),
+            base_model_path=Path(
+            self.config.prepare_base_model.base_model_path
+        ),  
+            epochs=params.EPOCHS,
+            batch_size=params.BATCH_SIZE,
+            learning_rate=params.LEARNING_RATE,
+            image_size=params.IMAGE_SIZE,
+        
+        )
+
+        return training_config
+    
+    ## model evaluation
+        
+    def get_evaluation_config(self) -> EvaluationConfig:
+        eval_config = EvaluationConfig(
+            path_of_model=Path("artifacts/training/trained_resnet18.pth"),
+            training_data=Path("artifacts/data_ingestion/mnist-m/testing"),
+            params_batch_size=self.params.BATCH_SIZE,
+            num_classes = 10
+        )
+        return eval_config       

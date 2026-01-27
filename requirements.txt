@@ -7,4 +7,7 @@ types-PyYAML
 torch
 torchvision
 torchaudio
+dvc
+fastapi
+uvicorn==0.18.3
 #-e .

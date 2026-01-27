@@ -1,8 +1,7 @@
-image_size: 224       
-channel: 3           
-classes: 10        
-pretrained: true        
-batch_size: 32
-epochs: 10
-learning_rate: 0.001              
-
+IMAGE_SIZE: 224
+CHANNELS: 3
+CLASSES: 10
+PRETRAINED: true
+BATCH_SIZE: 16
+EPOCHS: 1
+LEARNING_RATE: 0.001

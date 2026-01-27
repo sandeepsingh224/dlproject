@@ -1,7 +1,7 @@
 from src.cnnClassifier.config.configuration import ConfigurationManager
 from src.cnnClassifier.components.data_ingestion import DataIngestion
 from src.cnnClassifier.logger import logging
-
+from src.cnnClassifier.customexception import CustomException
 
 STAGE_NAME = "Data Ingestion stage"
 
@@ -18,7 +18,6 @@ class DataIngestionTrainingPipeline:
 
 
 
-
 if __name__ == '__main__':
     try:
         logging.info(f">>>>>> stage {STAGE_NAME} started <<<<<<")
@@ -28,3 +27,5 @@ if __name__ == '__main__':
     except Exception as e:
         logging.exception(e)
         raise e
+
+

@@ -20,3 +20,25 @@ class PrepareBaseModelConfig:
     classes: int
     batch_size: int
     epochs: int
+
+
+@dataclass(frozen=True)
+class TrainingConfig:
+    root_dir: Path
+    trained_model_path: Path
+    base_model_path: Path
+    training_data: Path
+    epochs: int
+    batch_size: int
+    learning_rate: float
+    image_size: int
+    
+
+@dataclass(frozen=True)
+class EvaluationConfig:
+    path_of_model: Path
+    training_data: Path
+    params_batch_size: int    
+    num_classes: int  
+
+

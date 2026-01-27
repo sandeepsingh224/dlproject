@@ -5,7 +5,7 @@ from src.cnnClassifier.logger import logging
 from box import ConfigBox
 from pathlib import Path
 import torch
-
+import json
 
 
 def read_yaml(path_to_yaml: Path) -> ConfigBox:
@@ -38,3 +38,12 @@ def save_model(path: Path, model):
     path.parent.mkdir(parents=True, exist_ok=True)
 
     torch.save(model.state_dict(), path)
+
+
+  
+def save_json(path: Path, data: dict):
+   
+    with open(path, "w") as f:
+        json.dump(data, f, indent=4)
+
+    logging.info(f"json file saved at: {path}")
